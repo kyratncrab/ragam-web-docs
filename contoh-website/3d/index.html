@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bengkel Roda — Contoh Gaya 3D</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#171c25; --text:#eef1f6; --muted:#9aa4b5;
+    --neon:#4fd1c5; --neon2:#8b7cf6; --line:rgba(255,255,255,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- hero 3D ---------- */
+  .hero{min-height:92vh;display:flex;align-items:center;justify-content:center;perspective:1200px;position:relative;overflow:hidden}
+  .grid-bg{position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:54px 54px;mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 75%)}
+  .hero-inner{position:relative;z-index:2;max-width:760px;text-align:center;transform-style:preserve-3d}
+  .kicker{display:inline-block;letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;font-weight:700;color:var(--neon);border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:.45em 1.1em}
+  h1{font-size:clamp(2.3rem,5.5vw,4rem);line-height:1.06;font-weight:800;letter-spacing:-.02em;margin:.5em 0 .25em;text-shadow:0 0 60px rgba(79,209,197,.25)}
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--muted);max-width:520px;margin:0 auto 1.9em}
+  .cta{display:inline-block;background:linear-gradient(90deg,var(--neon),var(--neon2));color:#0b0e13;font-weight:800;text-decoration:none;padding:.9em 1.9em;border-radius:999px;transition:transform .25s,box-shadow .25s;box-shadow:0 14px 40px rgba(79,209,197,.3)}
+  .cta:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 20px 55px rgba(79,209,197,.42)}
+
+  /* ---------- kartu 3D tilting ---------- */
+  .scene{position:relative;width:300px;height:390px;margin:56px auto 0;transform-style:preserve-3d}
+  .tilt-card{position:absolute;inset:0;background:var(--panel);border:1px solid var(--line);border-radius:26px;padding:30px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;
+    box-shadow:0 40px 80px rgba(0,0,0,.55);transform-style:preserve-3d;transition:transform .18s ease-out}
+  .tilt-card .glow{position:absolute;inset:-1px;border-radius:26px;background:radial-gradient(340px 220px at var(--mx,50%) var(--my,20%),rgba(79,209,197,.18),transparent 60%);pointer-events:none}
+  .icon3d{font-size:4.6rem;transform:translateZ(56px);filter:drop-shadow(0 12px 22px rgba(0,0,0,.5))}
+  .tilt-card h3{font-size:1.5rem;font-weight:800;transform:translateZ(42px)}
+  .tilt-card p{color:var(--muted);font-size:.95rem;transform:translateZ(30px)}
+  .tilt-card .price{font-size:1.25rem;font-weight:800;color:var(--neon);transform:translateZ(44px)}
+  .hint{color:var(--muted);font-size:.85rem;text-align:center;margin-top:26px;opacity:.8}
+
+  /* ---------- kubus 3D ---------- */
+  section{padding:84px 0}
+  .sec-head{max-width:620px;margin-bottom:48px}
+  .sec-head .tag{color:var(--neon);font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+  .sec-head h2{font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-.01em;margin:.3em 0}
+  .sec-head p{color:var(--muted)}
+
+  .cube-wrap{perspective:900px;display:flex;justify-content:center;margin:40px 0 20px}
+  .cube{position:relative;width:170px;height:170px;transform-style:preserve-3d;animation:spin 14s linear infinite}
+  .cube div{position:absolute;inset:0;background:var(--panel);border:1px solid var(--line);border-radius:18px;display:grid;place-items:center;font-size:2.4rem;box-shadow:inset 0 0 40px rgba(79,209,197,.06)}
+  .cube div:nth-child(1){transform:rotateY(0deg) translateZ(85px)}
+  .cube div:nth-child(2){transform:rotateY(90deg) translateZ(85px)}
+  .cube div:nth-child(3){transform:rotateY(180deg) translateZ(85px)}
+  .cube div:nth-child(4){transform:rotateY(270deg) translateZ(85px)}
+  .cube div:nth-child(5){transform:rotateX(90deg) translateZ(85px)}
+  .cube div:nth-child(6){transform:rotateX(-90deg) translateZ(85px)}
+  @keyframes spin{from{transform:rotateX(-14deg) rotateY(0)}to{transform:rotateX(-14deg) rotateY(360deg)}}
+
+  .cards3d{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;perspective:1000px}
+  .c3d{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:26px;transition:transform .25s;transform-style:preserve-3d}
+  .c3d:hover{transform:translY(-6px) rotateX(4deg) rotateY(-6deg)}
+  .c3d .ic{font-size:2rem;display:block;margin-bottom:12px;transform:translateZ(26px)}
+  .c3d h3{transform:translateZ(20px)}
+  .c3d p{color:var(--muted);font-size:.93rem;margin-top:.3em;transform:translateZ(14px)}
+  .c3d .price{color:var(--neon);font-weight:800;display:block;margin-top:.6em;transform:translateZ(24px)}
+
+  footer{padding:36px 0 48px;text-align:center;color:var(--muted);border-top:1px solid var(--line);font-size:.92rem}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-inner wrap">
+    <span class="kicker">Contoh gaya 3D</span>
+    <h1>Bengkel <em>Roda</em><br>Keren &amp; Masa Depan</h1>
+    <p class="lead">Kesan depth, dimensi, dan teknologi — cocok untuk usaha yang mau tampil beda dan berani.</p>
+    <a class="cta" href="https://wa.me/6287713466986">Pesan website seperti ini →</a>
+    <div class="scene">
+      <div class="tilt-card">
+        <div class="glow"></div>
+        <span class="icon3d">🔧</span>
+        <h3>Servis Rutin</h3>
+        <p>Ganti oli &amp; cek menyeluruh, selesai hari itu juga.</p>
+        <span class="price">mulai Rp150.000</span>
+      </div>
+    </div>
+    <p class="hint">gerakkan kursor di atas kartu ↑</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tag">Kenapa 3D</span>
+      <h2>Kesan yang sulit dilupakan</h2>
+      <p>Elemen-dimensi membuat website terasa hidup dan premium.</p>
+    </div>
+    <div class="cube-wrap"><div class="cube">
+      <div>⚙️</div><div>🛞</div><div>🔩</div><div>🛠️</div><div>🏁</div><div>✨</div>
+    </div></div>
+    <div class="cards3d">
+      <div class="c3d"><span class="ic">🪑</span><h3>Interior Sport</h3><p>Jok &amp; aksesori premium.</p><span class="price">Rp1.200.000</span></div>
+      <div class="c3d"><span class="ic">🔋</span><h3>Aki &amp; Kelistrikan</h3><p>Cek, ganti, dan jaminan.</p><span class="price">Rp350.000</span></div>
+      <div class="c3d"><span class="ic">🎨</span><h3>Detail &amp; Poles</h3><p>Body mengkilap seperti baru.</p><span class="price">Rp500.000</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © <b>Bengkel Roda</b> — contoh website gaya 3D<br>
+  Dibuat sebagai sampel, bukan bengkel asli.
+</footer>
+
+<script>
+  // tilt kartu 3D mengikuti kursor
+  const scene = document.querySelector('.scene');
+  const card = document.querySelector('.tilt-card');
+  scene.addEventListener('pointermove', e => {
+    const r = scene.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    card.style.transform = `rotateY(${(x - .5) * 34}deg) rotateX(${(.5 - y) * 34}deg)`;
+    card.style.setProperty('--mx', (x * 100) + '%');
+    card.style.setProperty('--my', (y * 100) + '%');
+  });
+  scene.addEventListener('pointerleave', () => {
+    card.style.transform = 'rotateY(0) rotateX(0)';
+  });
+</script>
+</body>
+</html>
