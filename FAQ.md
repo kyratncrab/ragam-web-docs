@@ -29,3 +29,6 @@ Nama toko, alamat, nomor WhatsApp, dan (opsional) foto atau menu/katalog.
 
 **10. Apakah data toko saya aman?**
 Ya. Data hanya kami gunakan untuk membuat dan mengelola website Anda. Lihat [Kebijakan Privasi](kebijakan-privasi.md).
+
+**11. Apakah bisa refund?**
+Bisa, dengan ketentuan tertentu (mis. pembatalan sebelum pengerjaan). Lihat [Kebijakan Refund](kebijakan-refund.md).
