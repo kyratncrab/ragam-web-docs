@@ -32,3 +32,5 @@ Ya. Data hanya kami gunakan untuk membuat dan mengelola website Anda. Lihat [Keb
 
 **11. Apakah bisa refund?**
 Bisa, dengan ketentuan tertentu (mis. pembatalan sebelum pengerjaan). Lihat [Kebijakan Refund](kebijakan-refund.md).
+
+Lihat juga [Syarat & Ketentuan](syarat-ketentuan.md).
